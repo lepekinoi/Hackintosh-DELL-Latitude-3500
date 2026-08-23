@@ -1,0 +1,32 @@
+# GitHub Issue Template Configuration
+# Organise les templates d'issues avec descriptions et labels par défaut
+
+# Bug reports — pour les problèmes techniques
+bug_report:
+  title: "[BUG] "
+  description: "Rapporter un problème technique"
+  labels:
+    - "bug"
+    - "needs-logs"
+
+# Feature requests — pour les améliorations
+feature_request:
+  title: "[FEATURE] "
+  description: "Suggérer une amélioration ou nouvelle fonctionnalité"
+  labels:
+    - "enhancement"
+
+# Configuration générale
+blank_issues_enabled: false
+contact_links:
+  - name: "Hackintosh Wiki (EN)"
+    url: "https://hackintosh.com"
+    about: "Guide complet Hackintosh"
+  
+  - name: "Dortania Guide (EN)"
+    url: "https://dortania.github.io/OpenCore-Install-Guide/"
+    about: "Guide officiel OpenCore"
+  
+  - name: "r/hackintosh (EN)"
+    url: "https://reddit.com/r/hackintosh"
+    about: "Communauté Reddit — support active"
