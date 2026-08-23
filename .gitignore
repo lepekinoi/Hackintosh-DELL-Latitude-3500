@@ -1,0 +1,26 @@
+# Identifiants personnels — ne jamais publier
+*serial*
+*SystemSerialNumber*
+
+# Dumps matériels volumineux ou contenant des identifiants machine
+*.dsl
+*.aml.orig
+dsdt*
+DSDT*
+origin/
+Results/
+bios-dump*.txt
+MDT-*.HTM
+MDT-*.LOG
+rapport-*.HTM
+rapport-*.LOG
+msinfo.txt
+devices-all.txt
+codec_dump*.txt
+
+# Logs OpenCore
+opencore-*.txt
+
+# macOS
+.DS_Store
+._*
