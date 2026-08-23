@@ -1,0 +1,500 @@
+[
+    {
+        "class": 48,
+        "hub_name": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+        "identifiers": {
+            "acpi_path": "\\_SB.PCI0.XHC",
+            "bdf": [
+                0,
+                20,
+                0
+            ],
+            "driver_key": "{36fc9e60-c465-11cf-8056-444553540000}\\0000",
+            "instance_id": "PCI\\VEN_8086&DEV_9DED&SUBSYS_08BD1028&REV_30\\3&11583659&0&A0",
+            "location_paths": [
+                "PCIROOT(0)#PCI(1400)",
+                "ACPI(_SB_)#ACPI(PCI0)#ACPI(XHC_)"
+            ],
+            "pci_id": [
+                "8086",
+                "9ded",
+                "8bd1",
+                "028"
+            ],
+            "pci_revision": 48
+        },
+        "name": "Contr\u00f4leur h\u00f4te Intel(R) USB\u00a03.1 eXtensible\u00a0-\u00a01.10 (Microsoft)",
+        "port_count": 18,
+        "ports": [
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+                    "multiple_companions": false,
+                    "port": 13
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_413C&PID_301A\\5&1A4E9922&0&1",
+                        "name": "Dell MS116 USB Optical Mouse",
+                        "speed": 0
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0781&PID_556B\\20060266811D6C211F83",
+                        "name": "Cruzer Edge",
+                        "speed": 2
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_046D&PID_C52B\\5&1A4E9922&0&1",
+                        "name": "USB Receiver",
+                        "speed": 1
+                    }
+                ],
+                "guessed": 3,
+                "index": 1,
+                "name": "Port 1",
+                "selected": true,
+                "selection_index": 1,
+                "status": "NoDeviceConnected",
+                "type": 3,
+                "type_c": false,
+                "user_connectable": true
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_413C&PID_301A\\5&1A4E9922&0&2",
+                        "name": "Dell MS116 USB Optical Mouse",
+                        "speed": 0
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0781&PID_5581\\0901F11DAFDEF837451B1AFEE090CE6FBB0EF267AD11BCC4F7D576A864F5AAF30CF000000000000000000000953BA5C8FF183120815581074E2ECA95",
+                        "name": " SanDisk 3.2Gen1",
+                        "speed": 2
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0781&PID_556B\\20060266811D6C211F83",
+                        "name": "Cruzer Edge",
+                        "speed": 2
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_046D&PID_C52B\\5&1A4E9922&0&2",
+                        "name": "USB Receiver",
+                        "speed": 1
+                    }
+                ],
+                "guessed": 0,
+                "index": 2,
+                "name": "Port 2",
+                "selected": true,
+                "selection_index": 2,
+                "status": "NoDeviceConnected",
+                "type": 0,
+                "type_c": false,
+                "user_connectable": true
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+                    "multiple_companions": false,
+                    "port": 15
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_413C&PID_301A\\5&1A4E9922&0&3",
+                        "name": "Dell MS116 USB Optical Mouse",
+                        "speed": 0
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0781&PID_556B\\20060266811D6C211F83",
+                        "name": "Cruzer Edge",
+                        "speed": 2
+                    },
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_046D&PID_C52B\\5&1A4E9922&0&3",
+                        "name": "USB Receiver",
+                        "speed": 1
+                    }
+                ],
+                "guessed": 3,
+                "index": 3,
+                "name": "Port 3",
+                "selected": true,
+                "selection_index": 3,
+                "status": "NoDeviceConnected",
+                "type": 3,
+                "type_c": false,
+                "user_connectable": true
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+                    "multiple_companions": false,
+                    "port": 16
+                },
+                "devices": [
+                    {
+                        "devices": [
+                            {
+                                "devices": [],
+                                "instance_id": "USB\\VID_046D&PID_C52B\\6&1438DB0B&0&4",
+                                "name": "USB Receiver",
+                                "speed": 1
+                            }
+                        ],
+                        "instance_id": "USB\\VID_05E3&PID_0610\\5&1A4E9922&0&4",
+                        "name": "USB2.0 Hub",
+                        "speed": 2
+                    }
+                ],
+                "guessed": 9,
+                "index": 4,
+                "name": "Port 4",
+                "selected": true,
+                "selection_index": 4,
+                "status": "DeviceConnected",
+                "type": 9,
+                "type_c": true,
+                "user_connectable": true
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 5,
+                "name": "Port 5",
+                "selected": false,
+                "selection_index": 5,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0BDA&PID_5520\\200901010001",
+                        "name": "Integrated_Webcam_HD",
+                        "speed": 2
+                    }
+                ],
+                "guessed": 255,
+                "index": 6,
+                "name": "Port 6",
+                "selected": true,
+                "selection_index": 6,
+                "status": "DeviceConnected",
+                "type": 255,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0BDA&PID_0177\\20121112761000000",
+                        "name": "USB2.0-CRW",
+                        "speed": 2
+                    }
+                ],
+                "guessed": 255,
+                "index": 7,
+                "name": "Port 7",
+                "selected": true,
+                "selection_index": 7,
+                "status": "NoDeviceConnected",
+                "type": 255,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 8,
+                "name": "Port 8",
+                "selected": false,
+                "selection_index": 8,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 9,
+                "name": "Port 9",
+                "selected": false,
+                "selection_index": 9,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_8087&PID_0029\\5&1A4E9922&0&10",
+                        "name": "Intel(R) Wireless Bluetooth(R)",
+                        "speed": 1
+                    }
+                ],
+                "guessed": 255,
+                "index": 7,
+                "name": "Port 10",
+                "selected": true,
+                "selection_index": 7,
+                "status": "DeviceConnected",
+                "type": 255,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 11,
+                "name": "Port 11",
+                "selected": false,
+                "selection_index": 11,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 2,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 12,
+                "name": "Port 12",
+                "selected": false,
+                "selection_index": 12,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 3,
+                "comment": null,
+                "companion_info": {
+                    "hub": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+                    "multiple_companions": false,
+                    "port": 1
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0781&PID_5581\\0901F11DAFDEF837451B1AFEE090CE6FBB0EF267AD11BCC4F7D576A864F5AAF30CF000000000000000000000953BA5C8FF183120815581074E2ECA95",
+                        "name": " SanDisk 3.2Gen1",
+                        "speed": 3
+                    }
+                ],
+                "guessed": 3,
+                "index": 13,
+                "name": "Port 13",
+                "selected": true,
+                "selection_index": 13,
+                "status": "NoDeviceConnected",
+                "type": 3,
+                "type_c": false,
+                "user_connectable": true
+            },
+            {
+                "class": 3,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 14,
+                "name": "Port 14",
+                "selected": false,
+                "selection_index": 14,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 3,
+                "comment": null,
+                "companion_info": {
+                    "hub": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+                    "multiple_companions": false,
+                    "port": 3
+                },
+                "devices": [
+                    {
+                        "devices": [],
+                        "instance_id": "USB\\VID_0781&PID_5581\\0901F11DAFDEF837451B1AFEE090CE6FBB0EF267AD11BCC4F7D576A864F5AAF30CF000000000000000000000953BA5C8FF183120815581074E2ECA95",
+                        "name": " SanDisk 3.2Gen1",
+                        "speed": 3
+                    }
+                ],
+                "guessed": 3,
+                "index": 15,
+                "name": "Port 15",
+                "selected": true,
+                "selection_index": 15,
+                "status": "NoDeviceConnected",
+                "type": 3,
+                "type_c": false,
+                "user_connectable": true
+            },
+            {
+                "class": 3,
+                "comment": null,
+                "companion_info": {
+                    "hub": "USB#ROOT_HUB30#4&25fcac55&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}",
+                    "multiple_companions": false,
+                    "port": 4
+                },
+                "devices": [
+                    {
+                        "devices": [
+                            {
+                                "devices": [],
+                                "instance_id": "USB\\VID_05E3&PID_0749\\000000001536",
+                                "name": "USB3.0 Card Reader",
+                                "speed": 3
+                            }
+                        ],
+                        "instance_id": "USB\\VID_05E3&PID_0612\\5&1A4E9922&0&16",
+                        "name": "USB3.1 Hub",
+                        "speed": 3
+                    }
+                ],
+                "guessed": 9,
+                "index": 16,
+                "name": "Port 16",
+                "selected": true,
+                "selection_index": 16,
+                "status": "DeviceConnected",
+                "type": 9,
+                "type_c": true,
+                "user_connectable": true
+            },
+            {
+                "class": 3,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 17,
+                "name": "Port 17",
+                "selected": false,
+                "selection_index": 17,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            },
+            {
+                "class": 3,
+                "comment": null,
+                "companion_info": {
+                    "hub": "",
+                    "multiple_companions": false,
+                    "port": 0
+                },
+                "devices": [],
+                "guessed": 255,
+                "index": 18,
+                "name": "Port 18",
+                "selected": false,
+                "selection_index": 18,
+                "status": "NoDeviceConnected",
+                "type": null,
+                "type_c": false,
+                "user_connectable": false
+            }
+        ],
+        "selected_count": 10
+    }
+]
