@@ -198,47 +198,49 @@ Redémarre et presse **F2** pour accéder au BIOS Dell :
 
 #### **Étape 6 : Post-Installation Audio (IMPORTANT)**
 
-⚠️ **L'audio nécessite une installation post-système** avec KDK + MyKextInstaller.
+⚠️ **`AppleHDA.kext` a été retiré par Apple à partir de la beta 2 de Tahoe.** 
+Il ne se trouve **plus** dans les KDK correspondant aux versions publiques — 
+inutile de le chercher là.
 
-**Procédure complète :**
+**Sources valides pour `AppleHDA.kext` :**
+- Le KDK de la **beta 1** de Tahoe (la seule à l'avoir encore embarqué)
+- Le dossier `/System/Library/Extensions/AppleHDA.kext` d'une installation **macOS 15 Sequoia**
 
-1. **Télécharge et installe le KDK (Kernel Debug Kit) pour Tahoe 26.0**
-   - Visite : https://developer.apple.com/download/
-   - Cherche « Kernel Debug Kit macOS 26 »
-   - Télécharge le `.dmg` correspondant à ta version Tahoe
-   - Installe en double-cliquant le `.dmg`
+**Procédure :**
 
-2. **Télécharge MyKextInstaller**
-   - Depuis : https://github.com/acidanthera/MacKernelSDK
-   - Ou utilise l'outil officiel Apple pour restaurer les kexts
+1. Depuis Recovery (Cmd+R au démarrage), Terminal :
+```bash
+   csrutil authenticated-root disable
+```
+   Redémarre normalement.
 
-3. **Restaure AppleHDA.kext dans le système**
-   ```bash
-   # Le KDK contient AppleHDA.kext
-   # Copie-le vers /System/Library/Extensions/ via MyKextInstaller
-   # OU via Terminal (mode recovery recommandé) :
-   
-   # Au redémarrage, appuie Cmd+R pour la recovery
-   # Ouvre Terminal dans Utilities
-   sudo mount -uw /
-   cp -r /path/to/AppleHDA.kext /System/Library/Extensions/
-   chown -R root:wheel /System/Library/Extensions/AppleHDA.kext
-   ```
+2. `csr-active-config` doit inclure le bit `CSR_ALLOW_UNAUTHENTICATED_ROOT` :
+```xml
+   <key>csr-active-config</key>
+   <data>AwgAAA==</data>  <!-- octets 03 08 00 00 = valeur CSR 0x803 -->
+```
 
-4. **Rebuild kernel cache et réinitialise**
-   ```bash
-   sudo kextcache -i /
-   sudo reboot
-   ```
+3. Installe **MyKextInstaller** (`github.com/Mirone/MyKextInstaller`) — 
+   il propose de télécharger `AppleHDA.kext` directement, sans avoir à le 
+   chercher toi-même.
 
-5. **Vérifie que l'audio fonctionne**
-   ```bash
-   # Après reboot, test :
-   afplay /System/Library/Sounds/Morse.aiff
-   # Doit émettre un son via les haut-parleurs
-   ```
+4. Lance l'installation du kext.
 
-**Pourquoi cette procédure ?** AppleHDA a été supprimé de Tahoe au démarrage, mais il existe toujours dans le KDK. AppleALC repose sur AppleHDA pour fonctionner, d'où la restauration post-install.
+5. 🔴 **Quand l'app demande de redémarrer : choisis « Restart Now», 
+   jamais « Later ».** C'est ce détail précis qui fait la différence entre 
+   une réinjection réussie et un échec silencieux — l'intégration à la 
+   collection de noyau scellée n'est effective qu'au prochain démarrage 
+   propre.
+
+6. Vérifie après redémarrage :
+```bash
+   kextstat | grep "AppleHDA"
+```
+   Trois lignes attendues : `AppleHDAController`, `AppleHDA`, 
+   `AppleHDAHardwareConfigDriver`.
+
+**Rappel** : cette réinjection est effacée par chaque mise à jour majeure 
+de macOS et doit être refaite.
 
 #### **Étape 7 : Autres Post-Installations**
 ```bash
