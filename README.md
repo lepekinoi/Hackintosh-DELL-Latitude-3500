@@ -31,7 +31,7 @@
 | **🧠 RAM** | 16 GB DDR4 2400 MHz (2×8 GB Dual Channel) |
 | **💾 SSD** | Kioxia/Toshiba KXG60ZNV512G 512 GB (PCIe Gen3, **512e**) |
 | **📡 WiFi** | Intel Wireless-AC AX200 WiFi 6 ✅ |
-| **🔊 Audio** | Realtek ALC3271 (VoodooHDA) ✅ |
+| **🔊 Audio** | Realtek ALC3271 (AppleALC + KDK) ✅ |
 | **🖥️ Écran** | 15.6" FHD 1920×1080 ✅ |
 | **🛑 BIOS** | Dell 1.36.0 (UEFI) |
 
@@ -49,7 +49,7 @@
 |:---:|:---:|:---|
 | 🚀 **Boot & Installation** | ✅ | OpenCore stable, installation complète |
 | 🎬 **Accélération GPU** | ✅ | Metal 3, QuickSync, encodage/décodage vidéo |
-| 🔊 **Audio** | ✅ | VoodooHDA, layout-id 19, prise jack détectée |
+| 🔊 **Audio** | ✅ | AppleALC + KDK post-install, layout-id 19, prise jack détectée |
 | 📡 **WiFi** | ✅ | Intel AX200, itlwm + HeliPort, ~150 Mbps |
 | 🖱️ **Trackpad** | ✅ | I2C DELL08BD, multitouch complet, VoodooI2C |
 | 🔆 **Luminosité** | ✅ | Plage complète (Fn-keys), persistance NVRAM |
@@ -72,7 +72,7 @@
 |:---:|:---:|:---|
 | 🆔 **Touch ID / Apple Pay** | ❌ | Pas de puce T2 |
 | 🎯 **macOS 27+** | ❌ | Tahoe = dernière version x86, macOS 27 = ARM only |
-| 🔒 **FileVault complet** | ❌ | Incompatible avec SIP partiellement désactivé (VoodooHDA) |
+| 🔒 **FileVault complet** | ❌ | Incompatible avec SIP partiellement désactivé (AppleALC) |
 
 </div>
 
@@ -196,13 +196,62 @@ Redémarre et presse **F2** pour accéder au BIOS Dell :
 5. ≈ 15-20 minutes, plusieurs reboots normaux
 ```
 
-#### **Étape 6 : Post-Installation**
+#### **Étape 6 : Post-Installation Audio (IMPORTANT)**
+
+⚠️ **L'audio nécessite une installation post-système** avec KDK + MyKextInstaller.
+
+**Procédure complète :**
+
+1. **Télécharge et installe le KDK (Kernel Debug Kit) pour Tahoe 26.0**
+   - Visite : https://developer.apple.com/download/
+   - Cherche « Kernel Debug Kit macOS 26 »
+   - Télécharge le `.dmg` correspondant à ta version Tahoe
+   - Installe en double-cliquant le `.dmg`
+
+2. **Télécharge MyKextInstaller**
+   - Depuis : https://github.com/acidanthera/MacKernelSDK
+   - Ou utilise l'outil officiel Apple pour restaurer les kexts
+
+3. **Restaure AppleHDA.kext dans le système**
+   ```bash
+   # Le KDK contient AppleHDA.kext
+   # Copie-le vers /System/Library/Extensions/ via MyKextInstaller
+   # OU via Terminal (mode recovery recommandé) :
+   
+   # Au redémarrage, appuie Cmd+R pour la recovery
+   # Ouvre Terminal dans Utilities
+   sudo mount -uw /
+   cp -r /path/to/AppleHDA.kext /System/Library/Extensions/
+   chown -R root:wheel /System/Library/Extensions/AppleHDA.kext
+   ```
+
+4. **Rebuild kernel cache et réinitialise**
+   ```bash
+   sudo kextcache -i /
+   sudo reboot
+   ```
+
+5. **Vérifie que l'audio fonctionne**
+   ```bash
+   # Après reboot, test :
+   afplay /System/Library/Sounds/Morse.aiff
+   # Doit émettre un son via les haut-parleurs
+   ```
+
+**Pourquoi cette procédure ?** AppleHDA a été supprimé de Tahoe au démarrage, mais il existe toujours dans le KDK. AppleALC repose sur AppleHDA pour fonctionner, d'où la restauration post-install.
+
+#### **Étape 7 : Autres Post-Installations**
 ```bash
-# Après le premier boot macOS réussi, installe les compléments
-1. Audio: Copie VoodooHDA.kext dans /Library/Extensions
-2. WiFi: Télécharge HeliPort depuis OpenIntelWireless
-3. Trackpad: VoodooI2C auto-activé via kext
-4. Réglages système: Language, Time Zone, iCloud (optionnel)
+# WiFi: Installe HeliPort (interface WiFi)
+# Télécharge depuis : https://github.com/OpenIntelWireless/HeliPort/releases
+# Ouvre l'app, paramètre le WiFi normalement
+
+# Bluetooth (optionnel) : Si tu veux Bluetooth
+# Achète un dongle USB Bluetooth (CSR8510 ou BCM20702)
+# Branche-le, zéro configuration supplémentaire
+
+# Trackpad: VoodooI2C déjà chargé via config.plist
+# Test : System Preferences → Trackpad → Multitouch devrait fonctionner
 ```
 
 ---
@@ -228,7 +277,7 @@ EFI/
 │   ├── 📁 Kexts/                  ← Kernel Extensions
 │   │   ├── Lilu.kext             (Framework)
 │   │   ├── WhateverGreen.kext     (GPU patching)
-│   │   ├── VoodooHDA.kext        (Audio sous Tahoe)
+│   │   ├── AppleALC.kext         (Audio — Tahoe avec KDK post-install)
 │   │   ├── itlwm.kext            (WiFi Intel)
 │   │   ├── VoodooI2C.kext        (Trackpad I2C)
 │   │   ├── VoodooI2CHID.kext     (HID Trackpad)
@@ -255,6 +304,7 @@ EFI/
 | `SSDT-XOSI.aml` | Trackpad I2C | Obligatoire pour DELL08BD |
 | `WhateverGreen.kext` | Framebuffer iGPU | Patchs DVMT 32 MB |
 | `VoodooI2C.kext` | Bus I2C | Avec VoodooI2CHID + dépendances |
+| `AppleALC.kext` | Audio | Nécessite KDK + AppleHDA.kext (post-install) |
 
 ---
 
@@ -281,14 +331,15 @@ EFI/
 <data>AQAAAA==</data>              <!-- Activer les patchs -->
 ```
 
-### 🔊 Audio & VoodooHDA
+### 🔊 Audio & AppleALC
 
 ```xml
 <!-- Boot-args dans NVRAM → boot-args -->
 <string>alcid=19 -lilubeta -wegbeta</string>
-<!-- Note: -ibtcompatbeta optionnel si test Bluetooth -->
+<!-- ✅ alcid=19 pour ALC3271 Latitude 3500 -->
+<!-- ✅ -lilubeta, -wegbeta pour stabilité Tahoe -->
 
-<!-- SIP partiellement désactivé pour VoodooHDA -->
+<!-- SIP partiellement désactivé pour AppleALC -->
 <key>csr-active-config</key>
 <data>AwgAAA==</data>              <!-- 0x08030003 -->
 ```
@@ -355,6 +406,31 @@ ioreg -l -p IODeviceTree | grep -i backlight
 
 ---
 
+### 🔊 Problème : Audio absent / muet
+
+**Causes courantes :**
+
+| Cause | Diagnostic | Remède |
+|-------|-----------|--------|
+| AppleHDA.kext non restauré | `ioreg \| grep AppleHDA` = rien | Relancer KDK + MyKextInstaller |
+| alcid=19 incorrect | Vérifier boot-args dans config.plist | Changer à `alcid=19` |
+| KDK non installé | `/Library/Developer/KDKs` vide | Télécharger + installer KDK officiel |
+| SIP mal configurée | `csrutil status` | `csr-active-config` = `0x08030003` requis |
+
+**Diagnostic complet :**
+```bash
+# Vérifie que AppleALC charge
+kextstat | grep AppleALC
+
+# Vérifie qu'AppleHDA existe
+sudo find /System/Library/Extensions -name "AppleHDA*" 2>/dev/null
+
+# Teste le son
+afplay /System/Library/Sounds/Morse.aiff
+```
+
+---
+
 ### 🔵 Problème : Pas de Bluetooth
 
 **Cause :** Regression Tahoe, chipsets Intel non supportés (confirmé AC9560 + AX200)
@@ -365,24 +441,15 @@ system_profiler SPBluetoothDataType
 # Résultat: "No Bluetooth devices found"
 ```
 
-**Solutions :**
-
-#### Option A : Dongle USB Bluetooth (✅ Recommandé)
+**Solution Recommandée : Dongle USB Bluetooth** ✅
 ```bash
 # Acheter: CSR8510 ou BCM20702 (~25 € Amazon/AliExpress)
-# Brancher sur port USB interne
+# Brancher sur port USB interne ou externe
 # Zéro configuration, reconnu nativement
+# Pair tes périphériques normalement
 ```
 
-#### Option B : Tenter avec boot-arg Tahoe (⚠️ Peu de succès)
-```xml
-<!-- Ajouter à boot-args dans config.plist -->
-<string>-ibtcompatbeta</string>
-
-<!-- Kexts requis: IntelBluetoothFirmware.kext présent -->
-```
-
-**Résultat réaliste :** Bluetooth reste non-opérationnel (~90% des cas).
+**Note :** Le dongle USB ne supportera PAS les features Continuity (AirDrop, Handoff, etc.)
 
 ---
 
@@ -447,9 +514,9 @@ Pour une documentation **détaillée et complète**, consulte:
 | **GPU** | Metal 3 | ✅ | `metal --version` → Metal 3 |
 | | QuickSync | ✅ | H.264, H.265, VP9 natif |
 | | Dual Display | ⚠️ | eDP + HDMI possible mais nécessite test |
-| **Audio** | Sortie speakers | ✅ | VoodooHDA, niveau ajustable |
+| **Audio** | Sortie speakers | ✅ | AppleALC + KDK, niveau ajustable |
 | | Combo jack 3.5 mm | ✅ | Casque + micro détectés |
-| | Niveaux mic | ⚠️ | Parfois faible, gain manuel dans VoodooHDA |
+| | Niveaux mic | ⚠️ | Parfois faible, gain manuel dans System Preferences |
 | **Trackpad** | Multitouch | ✅ | 2-finger scroll, 3-finger swipe |
 | | Force Touch | ❌ | Pas de capteur |
 | **WiFi** | Connexion | ✅ | AX200, ~150 Mbps |
@@ -477,7 +544,7 @@ Pour une documentation **détaillée et complète**, consulte:
 
 - ✅ **UEFI SecureBoot** : Désactivé (nécessaire pour OpenCore)
 - ⚠️ **System Integrity Protection (SIP)** : Partiellement désactivé (0x08030003)
-  - *Raison :* Requis pour VoodooHDA (remplacement AppleHDA)
+  - *Raison :* Requis pour AppleALC (framework audio)
   - *Conséquence :* Apple TV+ / Netflix en 1080p max (pas 4K)
 - ✅ **FileVault** : Possible mais non recommandé (SIP partiellement abaissé)
 - ✅ **iCloud / iMessage** : Fonctionnels (SMB correct, ROM Ethernet)
@@ -514,9 +581,15 @@ OCLP (OpenCore Legacy Patcher) compatible
 
 > 💾 **Format NVMe CRITIQUE :** Le KXG60ZNV512G DOIT rester en **512e natif**. Ne le reformate PAS en 4Kn (boucle infinie APFS).
 
+> 🔊 **Audio post-install obligatoire :** AppleALC seul ne fonctionne pas. KDK + MyKextInstaller + AppleHDA.kext restauré REQUIS.
+
 ---
 
 ## 📝 Corrections Récentes (v2.1)
+
+✅ **Audio documentée complètement** (AppleALC + KDK post-install)
+- Procédure complète avec étapes
+- Pourquoi cette approche (AppleHDA supprimé Tahoe, mais disponible KDK)
 
 ✅ **SSDT-PNLF : _UID corrigé (0x10 → 0x13)**
 - Luminosité maintenant exploit plage 0-100%
@@ -558,7 +631,7 @@ Ce projet est distribué sous licence **MIT** (voir [LICENSE](LICENSE)).
 
 **Les composants externes conservent leurs licences respectives :**
 - OpenCore, OpenRuntime : BSD (Acidanthera)
-- Kexts (Lilu, WhateverGreen, VoodooHDA, etc.) : Voir chaque dépôt
+- Kexts (Lilu, WhateverGreen, AppleALC, etc.) : Voir chaque dépôt
 - macOS Tahoe : © Apple Inc.
 
 ---
@@ -568,6 +641,8 @@ Ce projet est distribué sous licence **MIT** (voir [LICENSE](LICENSE)).
 **Configuration créée et testée par :** [@lepekinoi](https://github.com/lepekinoi)
 
 **Dernière vérification :** Août 2026
+
+**Tested avec :** macOS Tahoe 26.0.1, OpenCore 1.0.7+, BIOS Dell 1.36.0
 
 ---
 
@@ -587,4 +662,4 @@ N'oublie pas le **star** ! ⭐ Ça aide la communauté à le découvrir.
 
 ![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=lepekinoi.Hackintosh-DELL-Latitude-3500)
 
-</div>
+</div>+
