@@ -284,7 +284,6 @@ EFI/
 │   │   ├── VoodooI2C.kext        (Trackpad I2C)
 │   │   ├── VoodooI2CHID.kext     (HID Trackpad)
 │   │   ├── SMCBatteryManager.kext (Batterie)
-│   │   ├── ECEnabler.kext        (EC 16-bit)
 │   │   ├── NVMeFix.kext          (NVMe power)
 │   │   ├── RestrictEvents.kext   (OTA updates)
 │   │   ├── RealtekRTL8111.kext   (Ethernet)
@@ -435,25 +434,29 @@ afplay /System/Library/Sounds/Morse.aiff
 
 ### 🔵 Problème : Pas de Bluetooth
 
-**Cause :** Regression Tahoe, chipsets Intel non supportés (confirmé AC9560 + AX200)
+**Symptôme réel** (pas une simple absence) : le matériel est détecté et 
+identifié correctement (`idVendor 0x8087`, `idProduct` cohérent avec la 
+carte), le kext se charge avec un score de correspondance élevé, mais 
+l'attachement final n'aboutit jamais :
 
-**Diagnostic :**
-```bash
-system_profiler SPBluetoothDataType
-# Résultat: "No Bluetooth devices found"
-```
+ioreg -l -w0 | grep -A3 IntelBluetoothFirmware
+→ !registered, !matched, active
 
-**Solution Recommandée : Dongle USB Bluetooth** ✅
-```bash
-# Acheter: CSR8510 ou BCM20702 (~25 € Amazon/AliExpress)
-# Brancher sur port USB interne ou externe
-# Zéro configuration, reconnu nativement
-# Pair tes périphériques normalement
-```
+`system_profiler SPBluetoothDataType` affiche à la place un contrôleur 
+**fantôme** hérité du SMBIOS (`BCM_4350C2`, `Address: NULL`, `State: Off`) 
+— pas une absence de device.
 
-**Note :** Le dongle USB ne supportera PAS les features Continuity (AirDrop, Handoff, etc.)
+**Testé sans succès, dans l'ordre** :
+- ❌ `IntelBTPatcher.kext` → **provoque une panique noyau**, à ne jamais 
+  activer ([issue connue](https://github.com/OpenIntelWireless/IntelBluetoothFirmware/issues/486))
+- ❌ `-lilubetaall` / `-wegbetaall`
+- ❌ Nettoyage NVRAM ciblé + Reset NVRAM complet
+- ❌ Deux cartes Intel différentes (AC9560 CNVi et AX200 PCIe) — même résultat
+- ❌ Cartographie USB personnalisée vs par défaut
 
----
+Diagnostic complet : [`docs/BLUETOOTH-INVESTIGATION.md`](docs/BLUETOOTH-INVESTIGATION.md)
+
+**Solution** : dongle USB CSR8510 ou BCM20702.
 
 ### 📡 Problème : WiFi absent / très lent
 
